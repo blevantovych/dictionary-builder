@@ -1,0 +1,25 @@
+{
+  "name": "dictionary-builder",
+  "version": "1.0.0",
+  "description": "Builder for dictionary",
+  "main": "index.js",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "casual": "^1.6.2"
+  },
+  "scripts": {
+    "cli": "node cli.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TanoCuile/price-comparator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TanoCuile/price-comparator/issues"
+  },
+  "homepage": "https://github.com/TanoCuile/price-comparator#readme"
+}
