@@ -1,20 +1,6 @@
 const { EOL } = require("os");
 const fs = require("fs");
-const { Transform, pipeline } = require("stream");
-
-const toYML = new Transform({
-  transform: function (chunk, encoding, next) {
-    const ymlRow = chunk
-      .toString()
-      .split(EOL)
-      .map((row) => {
-        const [word, descr] = row.split(";");
-        return `${word}: ${descr}`;
-      })
-      .join(EOL);
-    next(null, ymlRow);
-  },
-});
+const { Transform } = require("stream");
 
 process.on("message", (msg) => {
   const { command, categoryPath, dictionaryPath, importFrom } = JSON.parse(msg);
@@ -26,6 +12,20 @@ process.on("message", (msg) => {
 });
 
 const importFile = ({ categoryPath, dictionaryPath, importFrom }) => {
+  const toYML = new Transform({
+    transform: function (chunk, encoding, next) {
+      const ymlRow = chunk
+        .toString()
+        .split(EOL)
+        .map((row) => {
+          const [word, descr] = row.split(";");
+          return `${word}: ${descr}`;
+        })
+        .join(EOL);
+      next(null, ymlRow);
+    },
+  });
+
   const rs = fs.createReadStream(importFrom);
   const ws = fs.createWriteStream(dictionaryPath);
 

@@ -23,22 +23,6 @@ class ProcessPoolManager {
           }
         }
       });
-
-      cp.process.on("exit", (msg) => {
-        console.log("process exited");
-      });
-
-      cp.process.on("disconnect", (msg) => {
-        console.log("process disconnected");
-      });
-
-      cp.process.on("close", (msg) => {
-        console.log("process closed");
-      });
-
-      cp.process.on("error", (msg) => {
-        console.log("process errored");
-      });
     });
   }
 
@@ -83,7 +67,7 @@ class ProcessPoolManager {
 module.exports = { ProcessPoolManager };
 
 const poolManager = new ProcessPoolManager({
-  workers: 1,
+  workers: 3,
   filesToImport: [
     path.join(process.cwd(), "data", "import_dict.csv"),
     path.join(process.cwd(), "data", "import_dict_1.csv"),
@@ -94,18 +78,18 @@ const poolManager = new ProcessPoolManager({
 
 poolManager.run();
 
-// setTimeout(() => {
-//   poolManager.import(path.join(process.cwd(), "data", "import_dict_3.csv"));
-// }, 1000);
+setTimeout(() => {
+  poolManager.import(path.join(process.cwd(), "data", "import_dict_3.csv"));
+}, 1000);
 
-// setTimeout(() => {
-//   poolManager.import(path.join(process.cwd(), "data", "import_dict_4.csv"));
-// }, 1500);
+setTimeout(() => {
+  poolManager.import(path.join(process.cwd(), "data", "import_dict_4.csv"));
+}, 1500);
 
-// setTimeout(() => {
-//   poolManager.import(path.join(process.cwd(), "data", "import_dict_5.csv"));
-// }, 2000);
+setTimeout(() => {
+  poolManager.import(path.join(process.cwd(), "data", "import_dict_5.csv"));
+}, 2000);
 
-// setTimeout(() => {
-//   poolManager.import(path.join(process.cwd(), "data", "import_dict_6.csv"));
-// }, 2000);
+setTimeout(() => {
+  poolManager.import(path.join(process.cwd(), "data", "import_dict_6.csv"));
+}, 2000);
