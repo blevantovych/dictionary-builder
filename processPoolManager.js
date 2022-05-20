@@ -1,4 +1,6 @@
 const { fork } = require("child_process");
+const fs = require("fs/promises");
+const cron = require("node-cron");
 const path = require("path");
 
 class ProcessPoolManager {
@@ -93,3 +95,19 @@ setTimeout(() => {
 setTimeout(() => {
   poolManager.import(path.join(process.cwd(), "data", "import_dict_6.csv"));
 }, 2000);
+
+let lastCheckForNewImports = new Date();
+
+cron.schedule("* * * * * *", async function () {
+  const dataDir = path.join(process.cwd(), "data");
+  const files = await fs.readdir(dataDir);
+
+  for (const file of files) {
+    const fileToImport = path.join(dataDir, file);
+    const stats = await fs.stat(fileToImport);
+    if (stats.birthtimeMs > lastCheckForNewImports.getTime()) {
+      poolManager.import(fileToImport);
+    }
+  }
+  lastCheckForNewImports = new Date();
+});

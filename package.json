@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/TanoCuile/price-comparator/issues"
   },
-  "homepage": "https://github.com/TanoCuile/price-comparator#readme"
+  "homepage": "https://github.com/TanoCuile/price-comparator#readme",
+  "dependencies": {
+    "node-cron": "^3.0.0"
+  }
 }
