@@ -1,0 +1,140 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is initial documentation for dictionary builder app.",
+    "version": "0.0.1",
+    "title": "Dictionary builder"
+  },
+  "host": "localhost",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "dictionary",
+      "description": "Dictionary builder API"
+    }
+  ],
+  "paths": {
+    "/dictionary": {
+      "post": {
+        "summary": "Add new item to dictionary",
+        "description": "",
+        "tags": ["dictionary"],
+        "operationId": "addPhrase",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Info about a phrase to be added",
+            "required": true,
+            "schema": { "$ref": "#/definitions/DictionaryItem" }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successfully added new phrase"
+          },
+          "400": {
+            "description": "Malformed request"
+          }
+        }
+      }
+    },
+    "/dictionary/{phrase}": {
+      "get": {
+        "tags": ["dictionary"],
+        "summary": "Get info about phrase",
+        "description": "",
+        "operationId": "getPhrase",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "phrase",
+            "in": "path",
+            "description": "Phrase to get explanations about",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "404": { "description": "Phrase not found" }
+        }
+      },
+      "delete": {
+        "tags": ["dictionary"],
+        "summary": "Delete phrase",
+        "description": "For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors",
+        "operationId": "deletePhrase",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "phrase",
+            "in": "path",
+            "description": "Phrase to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "404": { "description": "Phrase not found" }
+        }
+      },
+      "put": {
+        "tags": ["dictionary"],
+        "summary": "Update phrase info",
+        "description": "",
+        "operationId": "updatePhrase",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Phrase info to update (Can overwrite existing data)",
+            "required": true,
+            "schema": { "$ref": "#/definitions/DictionaryItemUpdate" }
+          }
+        ],
+        "responses": {
+          "204": { "description": "Updated phrase info" }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "DictionaryItem": {
+      "type": "object",
+      "properties": {
+        "phrase": {
+          "type": "string",
+          "description": "A phrase or word you you want to remember (e.g. piece of cake)"
+        },
+        "definition": {
+          "type": "string",
+          "description": "Explanations of the phrase (e.g. something that is very easy to do)"
+        },
+        "sentences": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Examples of usages of the phrase (e.g. The exam was a piece of cake.)"
+        }
+      }
+    },
+    "DictionaryItemUpdate": {
+      "type": "object",
+      "properties": {
+        "definition": {
+          "type": "string",
+          "description": "Explanations of the phrase (Will overwrite existing definition)"
+        },
+        "sentences": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Examples of usages of the phrase (Will overwrite existing sentences)"
+        }
+      }
+    }
+  }
+}
